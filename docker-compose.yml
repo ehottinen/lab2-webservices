@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+
+  authservice:
+    build:
+      context: ./authservice
+    ports:
+      - "8081:8081"
+    environment:
+      - SERVER_PORT=8081
+    networks:
+      - micro-net
+
+  jokeservice:
+    build:
+      context: ./jokeservice
+    ports:
+      - "8082:8082"
+    environment:
+      - SERVER_PORT=8082
+    networks:
+      - micro-net
+
+  quoteservice:
+    build:
+      context: ./quoteservice
+    ports:
+      - "8083:8083"
+    environment:
+      - SERVER_PORT=8083
+    networks:
+      - micro-net
+
+  apigateway:
+    build:
+      context: ./apigateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - authservice
+      - jokeservice
+      - quoteservice
+    environment:
+      - SERVER_PORT=8080
+    networks:
+      - micro-net
+
+networks:
+  micro-net:
+    driver: bridge
