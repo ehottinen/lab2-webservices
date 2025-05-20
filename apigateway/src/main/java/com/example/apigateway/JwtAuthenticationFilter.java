@@ -17,14 +17,14 @@ import java.security.Key;
 @Component
 public class JwtAuthenticationFilter implements GlobalFilter {
 
-    private static final String SECRET = "mysecurekeymysecurekeymysecurekey"; // min 256 bits for HS512
+    private static final String SECRET = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"; // min 256 bits for HS512
     private static final Key SECRET_KEY = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        if (request.getURI().getPath().contains("/auth/login")) {
+        if (request.getURI().getPath().startsWith("/api/auth")) {
             return chain.filter(exchange);
         }
 
