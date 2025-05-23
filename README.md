@@ -73,15 +73,3 @@ apigateway/
 jokeservice/
 quoteservice/
 docker-compose.yml
-
-Säkerhet
-
-    Alla tjänster använder samma JWT-secret, definierad i respektive application.properties.
-    API Gateway filtrerar bort anrop utan giltig JWT-token.
-    JokeService och QuoteService verifierar tokens lokalt genom spring-boot-starter-oauth2-resource-server.
-
-Övrigt
-
-    JWT-secret är hårdkodad i varje tjänst för enkelhetens skull.
-    Tjänsterna är stateless och kommunicerar endast via HTTP.
-    Denna lösning uppfyller kraven för den högre nivån på laborationen (till exempel VG), då varje tjänst ansvarar för egen säkerhet.
