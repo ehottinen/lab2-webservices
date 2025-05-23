@@ -23,7 +23,7 @@ Starta allt
 docker-compose up --build
 
 Detta bygger och startar alla fyra tjänster automatiskt.
-Hur man testar med Insomnia (eller annan API-klient)
+Hur man testar med Insomnia:
 1. Logga in för att få token
 
    Method: POST
@@ -33,7 +33,7 @@ Hur man testar med Insomnia (eller annan API-klient)
 Body (JSON):
 
 {
-"username": "user",
+"username": "user",     
 "password": "password"
 }
 
