@@ -1,37 +1,37 @@
-# Microservices Lab: API Gateway, JWT Authentication, and Protected Services
+Microservices Lab: API Gateway, JWT Authentication, and Protected Services
 
-## Overview
+Översikt
 
-This school assignment implements a basic microservices architecture with JWT-based authentication and routing through an API Gateway.
+Detta skolprojekt implementerar en mikrotjänst-arkitektur med JWT-autentisering och en central API Gateway för routing och säkerhet.
+Systemets komponenter
 
-The system includes the following components:
+    AuthService – autentiserar användare och genererar JWT-tokens
 
-- AuthService: Authenticates users and issues JWT tokens.
-- API Gateway: Routes requests to services and verifies JWT tokens.
-- JokeService: Returns a random programming joke. Protected by JWT.
-- QuoteService: Returns a random quote. Protected by JWT.
+    ApiGateway – hanterar routing till andra tjänster och verifierar JWT-tokens
 
-All services are containerized using Docker and managed with Docker Compose.
+    JokeService – returnerar ett slumpmässigt programmeringsskämt (skyddad med JWT)
 
-## How to Run
+    QuoteService – returnerar ett slumpmässigt citat (skyddad med JWT)
 
-1. Make sure you have Docker and Docker Compose installed.
-2. Build and start the system using:
+Alla tjänster körs i Docker-containrar och hanteras via Docker Compose.
 
-## Run All (with Docker Compose)
+Hur man kör:
+
+Starta hela systemet med Docker Compose
+    Kontrollera att Docker och Docker Compose är installerat.
+    Kör följande kommando i projektets rotmapp:
+
 docker-compose up --build
 
-This will start all four services.
+Detta bygger och startar alla fyra tjänster i ett gemensamt nätverk.
 
-## How to Test (using Insomnia)
-
-1. Open Insomnia and create a **POST** request to:
-
+Testning med Insomnia
+1. Hämta en JWT-token
+   Skapa en POST-förfrågan till:
 http://localhost:8080/api/auth/login
 
-
-- Go to the **Body** tab → select **JSON**
-- Enter the login credentials:
+Gå till fliken Body och välj JSON
+Skriv in följande innehåll:
 
   ```json
   {
@@ -39,48 +39,49 @@ http://localhost:8080/api/auth/login
     "password": "password"
   }
   ```
-
-- Click **Send**
-- The response will contain a token like:
-
+Klicka på Send
+Du får ett svar med en token:
   ```json
   {
     "token": "eyJhbGciOiJIUzUxMiJ9..."
   }
   ```
 
-2. Create a **GET** request to one of the protected endpoints:
-
+Använd token för att komma åt skyddade endpoints
+    Skapa en GET-förfrågan till:
 http://localhost:8080/api/jokes/random
-
 or
-
 http://localhost:8080/api/quotes/random
 
+    Gå till fliken Auth
+    Välj Bearer Token
+    Klistra in tokenen från steg 1
+    Klicka på Send – du bör få ett skämt eller citat i svaret
 
-- Go to the **Auth** tab
-- Choose **Bearer Token**
-- Paste the token from step 1
+3. Testa utan token
 
-- Click **Send** to receive a joke or quote.
+   Ta bort eller stäng av token i Auth-fliken
+   Skicka förfrågan igen
+   Du bör få ett 401 Unauthorized-svar
 
-3. To test unauthorized access:
+Projektstruktur
 
-- Disable or remove the token in the Auth tab
-- Send the request again
-- You should receive a `401 Unauthorized` response
+Varje tjänst har en egen katalog och egen Dockerfile. Projektets rot innehåller docker-compose.yml som bygger och startar alla tjänster.
 
-## Project Structure
+authservice/
+apigateway/
+jokeservice/
+quoteservice/
+docker-compose.yml
 
-Each service is in its own folder with a Dockerfile. The root directory contains the `docker-compose.yml` file that builds and runs all services.
+Säkerhet
 
-- `authservice/`
-- `apigateway/`
-- `jokeservice/`
-- `quoteservice/`
+    Alla tjänster använder samma JWT-secret, definierad i respektive application.properties.
+    API Gateway filtrerar bort anrop utan giltig JWT-token.
+    JokeService och QuoteService verifierar tokens lokalt genom spring-boot-starter-oauth2-resource-server.
 
-## Notes
+Övrigt
 
-- The JWT secret key is hardcoded and shared between AuthService and API Gateway for simplicity.
-- The services are stateless and communicate only through HTTP.
-- This project fulfills the requirements for the "Godkänt" level of the lab assignment.
+    JWT-secret är hårdkodad i varje tjänst för enkelhetens skull.
+    Tjänsterna är stateless och kommunicerar endast via HTTP.
+    Denna lösning uppfyller kraven för den högre nivån på laborationen (till exempel VG), då varje tjänst ansvarar för egen säkerhet.
