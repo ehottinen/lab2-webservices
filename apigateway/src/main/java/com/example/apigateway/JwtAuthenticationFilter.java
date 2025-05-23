@@ -17,7 +17,7 @@ import java.security.Key;
 @Component
 public class JwtAuthenticationFilter implements GlobalFilter {
 
-    private static final String SECRET = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF"; // min 256 bits for HS512
+    private static final String SECRET = "0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF";
     private static final Key SECRET_KEY = Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
 
     @Override
