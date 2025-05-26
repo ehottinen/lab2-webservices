@@ -23,6 +23,13 @@ Starta allt
 docker-compose up --build
 
 Detta bygger och startar alla fyra tjänster automatiskt.
+
+Om du vill bygga Docker-images manuellt innan du startar kan du köra Powershell-scriptet:
+
+./build-images.ps1
+
+Scriptet bygger images för varje mikrotjänst med hjälp av Maven och Spring Boot Buildpacks.
+
 Hur man testar med Insomnia:
 1. Logga in för att få token
 
