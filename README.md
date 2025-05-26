@@ -14,19 +14,22 @@ Alla tjänster är containeriserade med Docker och körs via Docker Compose.
 
 Hur man kör systemet:
 
+Dependencies: 
+
     Docker
 
     Docker Compose
 
-Starta allt
 
-docker-compose up --build
+`docker-compose up --build
+`
 
-Detta bygger och startar alla fyra tjänster automatiskt.
+Kommandot bygger och startar alla fyra tjänster automatiskt.
 
 Om du vill bygga Docker-images manuellt innan du startar kan du köra Powershell-scriptet:
 
-./build-images.ps1
+`./build-images.ps1
+`
 
 Scriptet bygger images för varje mikrotjänst med hjälp av Maven och Spring Boot Buildpacks.
 
@@ -39,17 +42,17 @@ Hur man testar med Insomnia:
 
 Body (JSON):
 
-{
+`{
 "username": "user",     
 "password": "password"
-}
+}`
 
 Svar:
 
-{
+`{
 "token": "blabla..."
 }
-
+`
 2. Anropa skyddade endpoints
 
    Method: GET
