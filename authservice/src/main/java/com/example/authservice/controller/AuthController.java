@@ -21,6 +21,6 @@ public class AuthController {
                 String token = JwtUtil.generateToken(request.getUsername());
                 return ResponseEntity.ok(Map.of("token", token));
             }
-            return ResponseEntity.status(401).body("Invalid credentials");
+            return ResponseEntity.status(403).body("Invalid credentials");
     }
 }
